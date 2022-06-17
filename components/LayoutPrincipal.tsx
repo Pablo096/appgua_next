@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { FC, PropsWithChildren } from 'react'
 import { NavBar } from './'
 
@@ -9,7 +10,17 @@ interface Props {
 
 export const LayoutPrincipal: FC<PropsWithChildren<Props>> = ( { children }) => {
   return (
-    <div className='fondoCirculo'>
+    <div style={{
+      width: '100%',
+      height: '90%',
+      position: 'absolute',
+      background: 'linear-gradient(90deg, #00AAE4, #056f92)',
+      borderRadius: '0% 0% 50% 50%'
+    }}>
+      <Head>
+        <title>Appgua</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <NavBar />
 
       <main style={{

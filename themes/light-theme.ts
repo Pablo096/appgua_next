@@ -27,14 +27,15 @@ export const lightTheme = createTheme({
         root: {
           backgroundColor: 'transparent',
           height: 150,
-          padding: 50,
-          paddingLeft: 150,
-          paddingRight: 150,
+          paddingTop: 50    
         },
       }
     },
 
     MuiTypography: {
+      defaultProps: {
+        fontFamily: "Arial, Helvetica, sans-serif"
+      },
       styleOverrides: {
         h1: {
           fontSize: 30,

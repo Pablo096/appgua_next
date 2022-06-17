@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
 import type { AppProps } from 'next/app'
 import { lightTheme } from '../themes';
 import { CssBaseline, ThemeProvider } from '@mui/material';

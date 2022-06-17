@@ -3,16 +3,17 @@ import { AppBar, Toolbar, Typography, Link, Box, Button, IconButton, Badge, Menu
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { SideMenu } from './SideMenu'
+import logo from '../images/logo.png';
 
 export const NavBar = () => {
   return (
     <AppBar>
-        <Toolbar>
-            <Image         
-                src='/logo.png'
+        <Toolbar sx={{paddingLeft: {xs: '50px', sm: '200px'}, paddingRight: {xs: '50px', sm: '200px'}}} >
+            <Image   
+                src={logo}
+                alt="Logotipo"
                 width={70}
-                height={60}             
-            />
+                height={60} />
 
             <Box flex='1' />
 
