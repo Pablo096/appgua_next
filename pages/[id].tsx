@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 
 import { Grid, Typography, Divider, Select, MenuItem, Box, InputLabel, OutlinedInput, FormControl, ButtonBase, Button, IconButton, SelectChangeEvent, Icon, Stack, makeStyles } from "@mui/material"
 import { NextPage } from "next"
@@ -153,7 +153,7 @@ const HomePage: NextPage<Props> = ( {user} ) => {
     return (
       <LayoutPrincipal >
         
-        <Box display='flex' height='79vh' sx={{marginLeft: '20%', flexDirection: {xs: 'column', sm: 'row'}}} >
+        <Box display='flex' height='79vh' sx={{marginLeft: {xs: '5%', sm: '20%'}, flexDirection: {xs: 'column', sm: 'row'}}} >
  
           <div>
             <Grid container spacing={2}  direction="column" sx={{width: {xs: '200px', sm: '420px'}}}>
@@ -169,7 +169,7 @@ const HomePage: NextPage<Props> = ( {user} ) => {
               <Grid item xs={6} container direction="column" spacing={2}>
                 <Grid item >
                   <Typography style={styleTextInfo} >Producto</Typography>
-                  <FormControl sx={{  width: 200 }} variant="standard">
+                  <FormControl sx={{width: '200px'}} variant="standard">
                     <Select value={ producto.name } onChange={onCambiarProducto} style={styleOpciones} disableUnderline>
                       {
                           (user.objeto.productos.map( producto => (
@@ -181,7 +181,7 @@ const HomePage: NextPage<Props> = ( {user} ) => {
                 </Grid>
                 <Grid  item>
                   <Typography style={styleTextInfo}>Se enviará a</Typography>
-                  <FormControl sx={{  width: 200 }} variant="standard">      
+                  <FormControl sx={{width: '200px'}} variant="standard">      
                     <Select value={direccion?.alias} onChange={onCambiarDireccion} style={styleOpciones} disableUnderline>
                     {
                       (user.objeto.direcciones.map( direccion => (
@@ -219,7 +219,7 @@ const HomePage: NextPage<Props> = ( {user} ) => {
 
               </Grid>
 
-              <Grid item  xs={6} container direction="column" display="flex" alignItems='center'>
+              <Grid item  xs={6} container direction="column" display="flex" sx={{alignItems: {xs:'end', sm: 'center'} }} >
                 <Grid item >            
                   <Box paddingTop={5} position="relative">                    
                     <Typography position="absolute"  style={styleTextoCantidad}>{cantidad}</Typography>                 
@@ -244,7 +244,7 @@ const HomePage: NextPage<Props> = ( {user} ) => {
                     </Grid>
                 </Grid>
                 <Grid item >
-                    <Button style={styleBotonAzul} onClick={onSolicitar}>Solicitar</Button>
+                    <Button  style={styleBotonAzul} onClick={onSolicitar}>Solicitar</Button>
                 </Grid>
                 </Grid>        
               </Grid>      
@@ -288,7 +288,7 @@ const HomePage: NextPage<Props> = ( {user} ) => {
   
   // You should use getServerSideProps when:
   // - Only if you need to pre-render a page whose data must be fetched at request time
-  
+/*  
   export const getServerSideProps: GetServerSideProps = async ( { params }) => {
       
     const { id } = params as { id: string };
@@ -301,6 +301,51 @@ const HomePage: NextPage<Props> = ( {user} ) => {
           }
       }
   }
-              
+  */ 
+
+  // You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes  
+  export const getStaticPaths: GetStaticPaths = async (ctx) => {
+    //const { data } = await  // your fetch function here 
+    const { data } = await  appguaApi.get<string[]>("clientes/id");
+    //const idUsuarios = ["U0OofwZIe7dhcXAIzMne8Suu2e92"];
+    
+    return {
+      paths: data.map( id => ({
+        params: {
+            id
+        }
+      })),
+      fallback: "blocking"
+    }
+  }
   
+// You should use getStaticProps when:
+//- The data required to render the page is available at build time ahead of a user’s request.
+//- The data comes from a headless CMS.
+//- The data can be publicly cached (not user-specific).
+//- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
+
+export const getStaticProps: GetStaticProps = async ( { params }) => {
+  const { id } = params as { id: string };
+  
+  const { data } = await  appguaApi.get<UserInfoResponse>(`usuario/info/sesion/${id}`);
+ 
+  if (data.error) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  /* Se regenera las páginas cada dos dias */
+  return {
+    props: {
+      user: data
+    },
+    revalidate: 60 * 60 * 24 * 2
+  }
+}
+
 export default HomePage
