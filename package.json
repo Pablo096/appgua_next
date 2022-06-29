@@ -19,9 +19,15 @@
     "firebase-admin": "^10.3.0",
     "firebase-functions": "^3.21.2",
     "next": "12.1.5",
+    "next-with-workbox": "^3.0.3",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "sharp": "^0.30.6"
+    "sharp": "^0.30.6",
+    "workbox-cli": "^6.5.3",
+    "workbox-precaching": "^6.5.3",
+    "workbox-routing": "^6.5.3",
+    "workbox-strategies": "^6.5.3",
+    "workbox-window": "^6.5.3"
   },
   "devDependencies": {
     "@types/node": "17.0.25",
