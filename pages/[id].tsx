@@ -8,8 +8,8 @@ import { Direccion, Producto, UserInfoResponse, PedidoResponse } from '../interf
 import Image from 'next/image';
 import { Add, AddTask, HorizontalRule } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
-//import vendedor1 from '../images/vendedor1.png';
-//import vendedor2 from '../images/vendedor2.png';
+import vendedor1 from '../images/vendedor1.png';
+import vendedor2 from '../images/vendedor2.png';
 import botellon from '../images/botellon.png';
 
 interface Props {
@@ -268,14 +268,12 @@ const HomePage: NextPage<Props> = ( {user} ) => {
             {
               !solicitudAprobada ? 
               <Image       
-              //Vendedor1 
-              src={botellon}
+              src={vendedor1}
               alt="Imagen de vendedor"
               width={550} height={500} />
               :   
               <Image    
-              //Vendedor2    
-              src={botellon}
+              src={vendedor2}
               alt="Imagen de vendedor"
               width={550} height={550} />
             }       

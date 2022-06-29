@@ -8,7 +8,6 @@ const nextConfig = withWorkbox( {
     swDest: "sw.js",
     swSrc: "worker.ts",
     force: true,
-    //exclude: ['/middleware/'],
     exclude: [ /middleware/ ]
   },
   reactStrictMode: true

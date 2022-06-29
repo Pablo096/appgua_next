@@ -4,13 +4,11 @@ import {NetworkOnly,NetworkFirst,StaleWhileRevalidate, CacheFirst} from "workbox
 
 declare const self: ServiceWorkerGlobalScope;
 // Precarga la app
+
 precacheAndRoute(self.__WB_MANIFEST);
 
 registerRoute(
-    ({ request }) => {
-        console.log(request.url);
-        return true;
-    },
+    ({ request }) =>  true,
     new CacheFirst({cacheName: 'api-response'}),"GET"
 ); 
 
